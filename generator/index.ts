@@ -84,7 +84,7 @@ if (res.statusCode === 200) {
     const nodes: Node[] = [];
 
     const unionRegex =
-        /(?:(?:an )?array of )?(?:one of )?(\w+)(?:, (?:or )?|$)/i;
+        /(?:(?:an )?array of )?(?:one of )?'?(\w+)'?(?:,? (?:or )?(?:but new options (?:can|may|might) be added\.)?|$)/i;
 
     for (const partition of partitions) {
         for (const path of partition) {
