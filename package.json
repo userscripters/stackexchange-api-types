@@ -28,7 +28,8 @@
     "scripts": {
         "generate": "node --experimental-json-modules --loader ts-node/esm generator/index.ts",
         "readme": "generate-readme",
-        "test": "tsd"
+        "test": "tsd",
+        "postversion": "bash ./scripts/version.sh"
     },
     "devDependencies": {
         "@types/jsdom": "^16.2.13",
