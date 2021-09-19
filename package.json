@@ -1,0 +1,39 @@
+{
+    "name": "@userscripters/stackexchange-api-types",
+    "description": "Stack Exchange API types generator",
+    "version": "0.1.0",
+    "author": {
+        "name": "Oleg Valter",
+        "email": "oleg.a.valter@gmail.com"
+    },
+    "license": "GPL-3.0-or-later",
+    "keywords": [
+        "stackoverflow",
+        "stack exchange",
+        "types",
+        "api",
+        "generator"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/userscripters/stackexchange-api-types.git"
+    },
+    "bugs": {
+        "url": "https://github.com/userscripters/stackexchange-api-types/issues"
+    },
+    "homepage": "https://github.com/userscripters/stackexchange-api-types#readme",
+    "scripts": {
+        "generate": "node --experimental-json-modules --loader ts-node/esm generator/index.ts",
+        "readme": "generate-readme"
+    },
+    "devDependencies": {
+        "@types/jsdom": "^16.2.13",
+        "@userscripters/generate-readme": "^2.1.1",
+        "got": "^11.8.2",
+        "jsdom": "^17.0.0",
+        "ts-node": "^10.2.1",
+        "typescript": "^4.4.3"
+    },
+    "type": "module",
+    "types": "./index.d.ts"
+}
