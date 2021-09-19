@@ -1,7 +1,7 @@
 import got from "got";
 import type { Node } from "typescript";
 import { URL } from "url";
-import { parseInterface } from "./parsers.js";
+import { InterfaceOptions, parseInterface } from "./parsers.js";
 import { getDocument, partition, sleep } from "./utils.js";
 
 const DOCS_BASE = "https://api.stackexchange.com";
@@ -86,6 +86,13 @@ if (res.statusCode === 200) {
     const unionRegex =
         /(?:(?:an )?array of )?(?:one of )?'?(\w+)'?(?:,? (?:or )?(?:but new options (?:can|may|might) be added\.)?|$)/i;
 
+    const interfaceOptions: InterfaceOptions = {
+        exported: true,
+        overrides: {
+            event_id: ts.SyntaxKind.NumberKeyword,
+        },
+    };
+
     for (const partition of partitions) {
         for (const path of partition) {
             const document = await getDocument(DOCS_BASE, path);
@@ -97,7 +104,7 @@ if (res.statusCode === 200) {
                 typeNameSel,
                 typeReqSel,
                 unionRegex,
-                true
+                interfaceOptions
             );
 
             nodes.push(iface, factory.createIdentifier("\n"));

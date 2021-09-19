@@ -74,7 +74,7 @@ export const parseFields = (
     });
 };
 
-type InterfaceOptions = {
+export type InterfaceOptions = {
     exported?: boolean;
     overrides?: Record<string, KeywordTypeSyntaxKind>;
 };
