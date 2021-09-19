@@ -1,5 +1,6 @@
 import type { KeywordTypeSyntaxKind, Modifier, NodeFactory } from "typescript";
 import ts from "typescript";
+import { createProperty } from "./factories.js";
 import { normalizeTypeName, text } from "./utils.js";
 
 export const API_TYPES: Record<string, KeywordTypeSyntaxKind> = {
@@ -69,13 +70,13 @@ export const parseFields = (
 
         const node = item ? f.createArrayTypeNode(keyword) : keyword;
 
-        return f.createPropertySignature(
-            undefined,
-            f.createIdentifier(name),
-            optional ? f.createToken(ts.SyntaxKind.QuestionToken) : undefined,
-            node
-        );
+        return createProperty(f, name, node, optional);
     });
+};
+
+type InterfaceOptions = {
+    exported?: boolean;
+    overrides?: Record<string, KeywordTypeSyntaxKind>;
 };
 
 /**
@@ -92,13 +93,26 @@ export const parseInterface = (
     nameSelector: string,
     modifierSelector: string,
     unionRegex: RegExp,
-    exported = false
+    { exported = false, overrides = {} }: InterfaceOptions = {}
 ) => {
     const { textContent } = document.querySelector(nameSelector)!;
     const name = normalizeTypeName(textContent!.replace(/type\s+/i, ""));
 
     const typeFields = [...document.querySelectorAll(".indented > .method")];
     const fields = parseFields(f, typeFields, modifierSelector, unionRegex);
+
+    const overridden = fields.map((field) => {
+        const { name } = field;
+
+        const fieldName = ts.isIdentifier(name)
+            ? name.escapedText.toString()
+            : "";
+
+        const override = overrides[fieldName];
+        return override
+            ? createProperty(f, fieldName, f.createKeywordTypeNode(override))
+            : field;
+    });
 
     const modifiers: Modifier[] = [];
     if (exported) modifiers.push(f.createModifier(ts.SyntaxKind.ExportKeyword));
@@ -109,6 +123,6 @@ export const parseInterface = (
         name,
         undefined,
         undefined,
-        fields
+        overridden
     );
 };
