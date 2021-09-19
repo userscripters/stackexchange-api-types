@@ -3,6 +3,7 @@ name: Publish a package
 on:
     release:
         types: [released]
+    workflow_dispatch:
 
 jobs:
     publish-gh:
@@ -18,10 +19,10 @@ jobs:
                   npm config set //npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN
                   npm install
               env:
-                  NODE_AUTH_TOKEN: ${{github.token}}
+                  NODE_AUTH_TOKEN: ${{ github.token }}
             - run: npm publish
               env:
-                  NODE_AUTH_TOKEN: ${{secrets.PAT}}
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     publish-npm:
         runs-on: ubuntu-latest
