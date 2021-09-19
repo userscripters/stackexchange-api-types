@@ -63,7 +63,7 @@ export const parseFields = (
 
         const key = item || type;
 
-        const keyword = desc.includes("one of")
+        const keyword = desc.includes(" or ")
             ? parseUnion(f, desc, unionRegex)
             : parseKeyword(f, key);
 
