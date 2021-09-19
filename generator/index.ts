@@ -96,7 +96,8 @@ if (res.statusCode === 200) {
                 document,
                 typeNameSel,
                 typeReqSel,
-                unionRegex
+                unionRegex,
+                true
             );
 
             nodes.push(iface, factory.createIdentifier("\n"));
