@@ -1,7 +1,7 @@
 {
     "name": "@userscripters/stackexchange-api-types",
     "description": "Stack Exchange API types generator",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "author": {
         "name": "Oleg Valter",
         "email": "oleg.a.valter@gmail.com"
