@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "noEmit": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "lib": ["ESNext", "DOM", "DOM.Iterable"],
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true
+    }
+}
