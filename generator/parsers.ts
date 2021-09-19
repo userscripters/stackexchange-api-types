@@ -1,4 +1,4 @@
-import type { KeywordTypeSyntaxKind, NodeFactory } from "typescript";
+import type { KeywordTypeSyntaxKind, Modifier, NodeFactory } from "typescript";
 import ts from "typescript";
 import { normalizeTypeName, text } from "./utils.js";
 
@@ -91,7 +91,8 @@ export const parseInterface = (
     document: Document,
     nameSelector: string,
     modifierSelector: string,
-    unionRegex: RegExp
+    unionRegex: RegExp,
+    exported = false
 ) => {
     const { textContent } = document.querySelector(nameSelector)!;
     const name = normalizeTypeName(textContent!.replace(/type\s+/i, ""));
@@ -99,9 +100,12 @@ export const parseInterface = (
     const typeFields = [...document.querySelectorAll(".indented > .method")];
     const fields = parseFields(f, typeFields, modifierSelector, unionRegex);
 
+    const modifiers: Modifier[] = [];
+    if (exported) modifiers.push(f.createModifier(ts.SyntaxKind.ExportKeyword));
+
     return f.createInterfaceDeclaration(
         undefined,
-        undefined,
+        modifiers,
         name,
         undefined,
         undefined,
