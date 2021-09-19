@@ -22,9 +22,13 @@
         "url": "https://github.com/userscripters/stackexchange-api-types/issues"
     },
     "homepage": "https://github.com/userscripters/stackexchange-api-types#readme",
+    "tsd": {
+        "directory": "test"
+    },
     "scripts": {
         "generate": "node --experimental-json-modules --loader ts-node/esm generator/index.ts",
-        "readme": "generate-readme"
+        "readme": "generate-readme",
+        "test": "tsd"
     },
     "devDependencies": {
         "@types/jsdom": "^16.2.13",
@@ -32,6 +36,7 @@
         "got": "^11.8.2",
         "jsdom": "^17.0.0",
         "ts-node": "^10.2.1",
+        "tsd": "^0.17.0",
         "typescript": "^4.4.3"
     },
     "type": "module",
