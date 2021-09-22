@@ -54,43 +54,6 @@ export interface Achievement {
     title: string;
 }
 
-export interface Answer {
-    accepted?: boolean;
-    answer_id: number;
-    awarded_bounty_amount?: number;
-    awarded_bounty_users?: ShallowUser[];
-    body?: string;
-    body_markdown?: string;
-    can_comment?: boolean;
-    can_edit?: boolean;
-    can_flag?: boolean;
-    can_suggest_edit?: boolean;
-    collectives: Collective[];
-    comment_count?: number;
-    comments?: Comment[];
-    community_owned_date: Date;
-    content_license: string;
-    creation_date: Date;
-    down_vote_count?: number;
-    downvoted?: boolean;
-    is_accepted: boolean;
-    last_activity_date: Date;
-    last_edit_date: Date;
-    last_editor?: ShallowUser;
-    link?: string;
-    locked_date: Date;
-    owner: ShallowUser;
-    posted_by_collectives: Collective[];
-    question_id: number;
-    recommendations: CollectiveRecommendation[];
-    score: number;
-    share_link?: string;
-    tags?: string[];
-    title?: string;
-    up_vote_count?: number;
-    upvoted?: boolean;
-}
-
 export interface Badge {
     award_count: number;
     badge_id: number;
