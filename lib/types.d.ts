@@ -602,3 +602,4 @@ export interface CollectiveMembership {
     role: "admin" | "recognized_member" | "member";
 }
 
+export as namespace StackExchangeAPI;
