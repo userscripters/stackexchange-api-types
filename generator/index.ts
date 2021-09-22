@@ -1,5 +1,5 @@
 import got from "got";
-import type { Node } from "typescript";
+import type { Node, __String } from "typescript";
 import { URL } from "url";
 import { InterfaceOptions, parseInterface } from "./parsers.js";
 import { getDocument, partition, sleep } from "./utils.js";
@@ -81,7 +81,9 @@ if (res.statusCode === 200) {
         ts.ScriptKind.TS
     );
 
-    const nodes: Node[] = [];
+    const nsName = "StackExchangeAPI";
+
+    const nodes: Map<__String, Node> = new Map();
 
     const unionRegex =
         /(?:(?:an )?array of )?(?:one of )?'?(\w+)'?(?:,? (?:or )?(?:but new options (?:can|may|might) be added\.)?|$)/i;
@@ -107,13 +109,22 @@ if (res.statusCode === 200) {
                 interfaceOptions
             );
 
-            nodes.push(iface, factory.createIdentifier("\n"));
+            const { escapedText } = iface.name;
+
+            nodes.has(escapedText) || nodes.set(escapedText, iface);
         }
 
         await sleep(1);
     }
 
-    const list = factory.createNodeArray(nodes);
+    const unique: Node[] = [];
+    for (const [, node] of nodes) {
+        unique.push(node, factory.createIdentifier("\n"));
+    }
+
+    unique.push(factory.createNamespaceExportDeclaration(nsName));
+
+    const list = factory.createNodeArray(unique);
     const content = printer.printList(ts.ListFormat.MultiLine, list, typesFile);
 
     const { writeFile } = await import("fs/promises");
