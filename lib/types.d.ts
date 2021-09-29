@@ -12,17 +12,17 @@ export interface Answer {
     collectives: Collective[];
     comment_count?: number;
     comments?: Comment[];
-    community_owned_date: Date;
+    community_owned_date: number;
     content_license: string;
-    creation_date: Date;
+    creation_date: number;
     down_vote_count?: number;
     downvoted?: boolean;
     is_accepted: boolean;
-    last_activity_date: Date;
-    last_edit_date: Date;
+    last_activity_date: number;
+    last_edit_date: number;
     last_editor?: ShallowUser;
     link?: string;
-    locked_date: Date;
+    locked_date: number;
     owner: ShallowUser;
     posted_by_collectives: Collective[];
     question_id: number;
@@ -38,7 +38,7 @@ export interface Answer {
 export interface AccessToken {
     access_token: string;
     account_id: number;
-    expires_on_date: Date;
+    expires_on_date: number;
     scope: string[];
 }
 
@@ -46,7 +46,7 @@ export interface Achievement {
     account_id: number;
     achievement_type: "badge" | "privilege" | "reputation";
     badge_rank: "gold" | "silver" | "bronze";
-    creation_date: Date;
+    creation_date: number;
     is_unread: boolean;
     link: string;
     on_site: Site;
@@ -77,17 +77,17 @@ export interface Collective {
 export interface CollectiveReport {
     activity_report_dimensions?: ("date" | "page_views" | "unique_users" | "tag" | "total_questions" | "open_question" | "answered_questions" | "total_comments" | "total_answers" | "community_member_questions" | "community_member_answers" | "community_member_comments" | "percent_response_24hrs" | "percent_answer_24hrss")[];
     collective: Collective;
-    creation_date: Date;
+    creation_date: number;
     dimensions: string[];
     download_link: string;
-    end_date: Date;
+    end_date: number;
     health_report_dimensions?: ("date" | "page_views" | "unique_users" | "tag" | "total_questions" | "open_question" | "answered_questions" | "total_comments" | "total_answers" | "community_member_questions" | "community_member_answers" | "community_member_comments" | "percent_response_24hrs" | "percent_answer_24hrss")[];
     included_tags: string[];
     metrics: string[];
     name: string;
     report_id: number;
     report_type: "unknown" | "user" | "activity" | "health";
-    start_date: Date;
+    start_date: number;
     state: "pending" | "complete";
     users_report_dimensions?: ("date" | "page_views" | "unique_users" | "tag" | "total_questions" | "open_question" | "answered_questions" | "total_comments" | "total_answers" | "community_member_questions" | "community_member_answers" | "community_member_comments" | "percent_response_24hrs" | "percent_answer_24hrss")[];
 }
@@ -98,7 +98,7 @@ export interface Comment {
     can_flag?: boolean;
     comment_id: number;
     content_license: string;
-    creation_date: Date;
+    creation_date: number;
     edited: boolean;
     link?: string;
     owner: ShallowUser;
@@ -116,7 +116,7 @@ export interface Error {
 }
 
 export interface Event {
-    creation_date: Date;
+    creation_date: number;
     event_id: number;
     event_type: "question_posted" | "answer_posted" | "comment_posted" | "post_edited" | "user_created";
     excerpt?: string;
@@ -148,7 +148,7 @@ export interface InboxItem {
     answer_id: number;
     body?: string;
     comment_id: number;
-    creation_date: Date;
+    creation_date: number;
     is_unread: boolean;
     item_type: "comment" | "chat_message" | "new_answer" | "careers_message" | "careers_invitations" | "meta_question" | "post_notice" | "moderator_message" | "question_update" | "followed_post_activity" | "subcommunity_endorsement" | "subcommunity_leaderboard";
     link: string;
@@ -178,8 +178,8 @@ export interface NetworkUser {
     account_id: number;
     answer_count: number;
     badge_counts: BadgeCount;
-    creation_date: Date;
-    last_access_date: Date;
+    creation_date: number;
+    last_access_date: number;
     question_count: number;
     reputation: number;
     site_name: string;
@@ -191,7 +191,7 @@ export interface NetworkUser {
 }
 
 export interface AccountMerge {
-    merge_date: Date;
+    merge_date: number;
     new_account_id: number;
     old_account_id: number;
 }
@@ -201,7 +201,7 @@ export interface NetworkActivity {
     activity_type: "question_posted" | "answer_posted" | "badge_earned" | "comment_posted";
     api_site_parameter: string;
     badge_id: number;
-    creation_date: Date;
+    creation_date: number;
     description: string;
     link: string;
     post_id: number;
@@ -212,7 +212,7 @@ export interface NetworkActivity {
 
 export interface Notification {
     body: string;
-    creation_date: Date;
+    creation_date: number;
     is_unread: boolean;
     notification_type: "generic" | "profile_activity" | "bounty_expired" | "bounty_expires_in_one_day" | "badge_earned" | "bounty_expires_in_three_days" | "reputation_bonus" | "accounts_associated" | "new_privilege" | "post_migrated" | "moderator_message" | "registration_reminder" | "edit_suggested" | "substantive_edit" | "bounty_grace_period_started";
     post_id: number;
@@ -226,11 +226,11 @@ export interface Post {
     comment_count?: number;
     comments?: Comment[];
     content_license: string;
-    creation_date: Date;
+    creation_date: number;
     down_vote_count?: number;
     downvoted?: boolean;
-    last_activity_date: Date;
-    last_edit_date: Date;
+    last_activity_date: number;
+    last_edit_date: number;
     last_editor?: ShallowUser;
     link: string;
     owner: ShallowUser;
@@ -257,7 +257,7 @@ export interface Question {
     body?: string;
     body_markdown?: string;
     bounty_amount: number;
-    bounty_closes_date: Date;
+    bounty_closes_date: number;
     bounty_user?: ShallowUser;
     can_answer?: boolean;
     can_close?: boolean;
@@ -266,32 +266,32 @@ export interface Question {
     can_flag?: boolean;
     can_suggest_edit?: boolean;
     close_vote_count?: number;
-    closed_date: Date;
+    closed_date: number;
     closed_details?: ClosedDetails;
     closed_reason: string;
     collectives: Collective[];
     comment_count?: number;
     comments?: Comment[];
-    community_owned_date: Date;
+    community_owned_date: number;
     content_license: string;
-    creation_date: Date;
+    creation_date: number;
     delete_vote_count?: number;
     down_vote_count?: number;
     downvoted?: boolean;
     favorite_count?: number;
     favorited?: boolean;
     is_answered: boolean;
-    last_activity_date: Date;
-    last_edit_date: Date;
+    last_activity_date: number;
+    last_edit_date: number;
     last_editor?: ShallowUser;
     link: string;
-    locked_date: Date;
+    locked_date: number;
     migrated_from: MigrationInfo;
     migrated_to: MigrationInfo;
     notice?: Notice;
     owner: ShallowUser;
     posted_by_collectives: Collective[];
-    protected_date: Date;
+    protected_date: number;
     question_id: number;
     reopen_vote_count?: number;
     score: number;
@@ -306,7 +306,7 @@ export interface Question {
 export interface QuestionTimeline {
     comment_id: number;
     content_license: string;
-    creation_date: Date;
+    creation_date: number;
     down_vote_count: number;
     owner: ShallowUser;
     post_id: number;
@@ -319,7 +319,7 @@ export interface QuestionTimeline {
 
 export interface Reputation {
     link?: string;
-    on_date: Date;
+    on_date: number;
     post_id: number;
     post_type: "question" | "answer" | "article";
     reputation_change: number;
@@ -329,7 +329,7 @@ export interface Reputation {
 }
 
 export interface ReputationHistory {
-    creation_date: Date;
+    creation_date: number;
     post_id: number;
     reputation_change: number;
     reputation_history_type: "asker_accepts_answer" | "asker_unaccept_answer" | "answer_accepted" | "answer_unaccepted" | "voter_downvotes" | "voter_undownvotes" | "post_downvoted" | "post_undownvoted" | "post_upvoted" | "post_unupvoted" | "suggested_edit_approval_received" | "post_flagged_as_spam" | "post_flagged_as_offensive" | "bounty_given" | "bounty_earned" | "bounty_cancelled" | "post_deleted" | "post_undeleted" | "association_bonus" | "arbitrary_reputation_change" | "vote_fraud_reversal" | "post_migrated" | "user_deleted" | "example_upvoted" | "example_unupvoted" | "proposed_change_approved" | "doc_link_upvoted" | "doc_link_unupvoted" | "doc_source_removed" | "suggested_edit_approval_overridden";
@@ -340,7 +340,7 @@ export interface Revision {
     body?: string;
     comment: string;
     content_license: string;
-    creation_date: Date;
+    creation_date: number;
     is_rollback: boolean;
     last_body?: string;
     last_tags: string[];
@@ -360,18 +360,18 @@ export interface SearchExcerpt {
     answer_count: number;
     answer_id: number;
     body: string;
-    closed_date?: Date;
-    community_owned_date?: Date;
-    creation_date: Date;
+    closed_date?: number;
+    community_owned_date?: number;
+    creation_date: number;
     equivalent_tag_search: string[];
     excerpt: string;
     has_accepted_answer: boolean;
     is_accepted: boolean;
     is_answered: boolean;
     item_type: "question" | "answer";
-    last_activity_date: Date;
+    last_activity_date: number;
     last_activity_user?: ShallowUser;
-    locked_date?: Date;
+    locked_date?: number;
     owner?: ShallowUser;
     question_id: number;
     question_score: number;
@@ -384,15 +384,15 @@ export interface Site {
     aliases: string[];
     api_site_parameter: string;
     audience: string;
-    closed_beta_date: Date;
+    closed_beta_date: number;
     favicon_url: string;
     high_resolution_icon_url: string;
     icon_url: string;
-    launch_date: Date;
+    launch_date: number;
     logo_url: string;
     markdown_extensions: ("MathJax" | "Prettify" | "Balsamiq" | "jTab" | "strings")[];
     name: string;
-    open_beta_date: Date;
+    open_beta_date: number;
     related_sites: RelatedSite[];
     site_state: "normal" | "closed_beta" | "open_beta" | "linked_meta";
     site_type: "main_site" | "meta_site";
@@ -402,14 +402,14 @@ export interface Site {
 }
 
 export interface SuggestedEdit {
-    approval_date: Date;
+    approval_date: number;
     body?: string;
     comment: string;
-    creation_date: Date;
+    creation_date: number;
     post_id: number;
     post_type: "question" | "answer" | "article";
     proposing_user: ShallowUser;
-    rejection_date: Date;
+    rejection_date: number;
     suggested_edit_id: number;
     tags: string[];
     title: string;
@@ -421,7 +421,7 @@ export interface Tag {
     has_synonyms: boolean;
     is_moderator_only: boolean;
     is_required: boolean;
-    last_activity_date?: Date;
+    last_activity_date?: number;
     name: string;
     synonyms?: string[];
     user_id: number;
@@ -441,17 +441,17 @@ export interface TagScore {
 
 export interface TagSynonym {
     applied_count: number;
-    creation_date: Date;
+    creation_date: number;
     from_tag: string;
-    last_applied_date: Date;
+    last_applied_date: number;
     to_tag: string;
 }
 
 export interface TagWiki {
     body?: string;
-    body_last_edit_date: Date;
+    body_last_edit_date: number;
     excerpt: string;
-    excerpt_last_edit_date: Date;
+    excerpt_last_edit_date: number;
     last_body_editor?: ShallowUser;
     last_excerpt_editor?: ShallowUser;
     tag_name: string;
@@ -474,12 +474,12 @@ export interface User {
     answer_count?: number;
     badge_counts: BadgeCount;
     collectives: CollectiveMembership[];
-    creation_date: Date;
+    creation_date: number;
     display_name: string;
     down_vote_count?: number;
     is_employee: boolean;
-    last_access_date: Date;
-    last_modified_date: Date;
+    last_access_date: number;
+    last_modified_date: number;
     link: string;
     location: string;
     profile_image: string;
@@ -490,7 +490,7 @@ export interface User {
     reputation_change_quarter: number;
     reputation_change_week: number;
     reputation_change_year: number;
-    timed_penalty_date: Date;
+    timed_penalty_date: number;
     up_vote_count?: number;
     user_id: number;
     user_type: "unregistered" | "registered" | "moderator" | "team_admin" | "does_not_exist";
@@ -501,7 +501,7 @@ export interface User {
 export interface UserTimeline {
     badge_id: number;
     comment_id: number;
-    creation_date: Date;
+    creation_date: number;
     detail: string;
     link?: string;
     post_id: number;
@@ -541,7 +541,7 @@ export interface CollectiveExternalLink {
 
 export interface CollectiveRecommendation {
     collective: Collective;
-    creation_date: Date;
+    creation_date: number;
 }
 
 export interface BadgeCount {
@@ -573,14 +573,14 @@ export interface OriginalQuestion {
 }
 
 export interface MigrationInfo {
-    on_date: Date;
+    on_date: number;
     other_site: Site;
     question_id: number;
 }
 
 export interface Notice {
     body: string;
-    creation_date: Date;
+    creation_date: number;
     owner_user_id: number;
 }
 

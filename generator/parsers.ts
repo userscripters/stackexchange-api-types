@@ -8,6 +8,7 @@ export const API_TYPES: Record<string, KeywordTypeSyntaxKind> = {
     string: ts.SyntaxKind.StringKeyword,
     integer: ts.SyntaxKind.NumberKeyword,
     decimal: ts.SyntaxKind.NumberKeyword,
+    date: ts.SyntaxKind.NumberKeyword,
 };
 
 /**
