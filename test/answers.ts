@@ -8,4 +8,4 @@ expectType<Answer>(answer);
 expectType<number>(answer.answer_id);
 expectType<Collective[]>(answer.collectives);
 expectType<Comment[] | undefined>(answer.comments);
-expectType<ShallowUser>(answer.owner);
+expectType<ShallowUser | undefined>(answer.owner);
