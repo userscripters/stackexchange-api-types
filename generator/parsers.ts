@@ -40,13 +40,13 @@ export const parseKeyword = (f: NodeFactory, key: string) => {
 
 /**
  * @summary parses type members into array of PropertySignature
- * @param {NodeFactory} f compiler factory to use
- * @param {Element[]} fields type description fields
- * @param {string} modifierSelector selector for matching optionality modifier
- * @param {RegExp} unionRegex regular expression to split union members
+ * @param factory compiler factory to use
+ * @param fields type description fields
+ * @param modifierSelector selector for matching optionality modifier
+ * @param unionRegex regular expression to split union members
  */
 export const parseFields = (
-    f: NodeFactory,
+    factory: NodeFactory,
     fields: Element[],
     modifierSelector: string,
     unionRegex: RegExp
@@ -66,12 +66,12 @@ export const parseFields = (
         const key = item || type;
 
         const keyword = desc.includes(" or ")
-            ? parseUnion(f, desc, unionRegex)
-            : parseKeyword(f, key);
+            ? parseUnion(factory, desc, unionRegex)
+            : parseKeyword(factory, key);
 
-        const node = item ? f.createArrayTypeNode(keyword) : keyword;
+        const node = item ? factory.createArrayTypeNode(keyword) : keyword;
 
-        return createProperty(f, name, node, optional);
+        return createProperty(factory, name, node, optional);
     });
 };
 
