@@ -48,15 +48,15 @@ export const parseKeyword = (f: NodeFactory, key: string) => {
 export const parseFields = (
     factory: NodeFactory,
     fields: Element[],
+    nameSelector: string,
+    descrSelector: string,
     modifierSelector: string,
     unionRegex: RegExp
 ) => {
     return fields.map((field) => {
         const optional = !!field.querySelector(modifierSelector);
-        const name = text(field.querySelector(".method-name")!);
-        const [desc] = (
-            field.querySelector(".method-description")!.textContent || ""
-        )
+        const name = text(field.querySelector(nameSelector)!);
+        const [desc] = (field.querySelector(descrSelector)!.textContent || "")
             .trim()
             .split("\n");
 
@@ -105,6 +105,8 @@ export const parseInterface = (
     const fields = parseFields(
         factory,
         typeFields,
+        ".method-name",
+        ".method-description",
         modifierSelector,
         unionRegex
     );
