@@ -96,8 +96,8 @@ export const parseInterface = (
     unionRegex: RegExp,
     { exported = false, overrides = {} }: InterfaceOptions = {}
 ) => {
-    const { textContent } = document.querySelector(nameSelector)!;
-    const name = normalizeTypeName(textContent!.replace(/type\s+/i, ""));
+    const { textContent } = document.querySelector(nameSelector) || {};
+    const name = normalizeTypeName(textContent?.replace(/type\s+/i, "") || "");
 
     const typeFields = [...document.querySelectorAll(".indented > .method")];
     const fields = parseFields(f, typeFields, modifierSelector, unionRegex);
