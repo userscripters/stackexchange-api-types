@@ -6,7 +6,7 @@
 | Name | @userscripters/stackexchange-api-types |
 | Description | Stack Exchange API types generator |
 | License | [GPL-3.0-or-later](https://spdx.org/licenses/GPL-3.0-or-later) |
-| Version | 1.0.0 |
+| Version | 2.0.0 |
 
 # Support
 
