@@ -82,14 +82,14 @@ export type InterfaceOptions = {
 
 /**
  * @summary parses type description into InterfaceDeclaration
- * @param {NodeFactory} f compiler factory to use
- * @param {Document} document document element to parse from
- * @param {string} nameSelector interface identifier selector
- * @param {string} modifierSelector selector for matching optionality modifier
- * @param {RegExp} unionRegex regular expression to split union members
+ * @param factory compiler factory to use
+ * @param document document element to parse from
+ * @param nameSelector interface identifier selector
+ * @param modifierSelector selector for matching optionality modifier
+ * @param unionRegex regular expression to split union members
  */
 export const parseInterface = (
-    f: NodeFactory,
+    factory: NodeFactory,
     document: Document,
     nameSelector: string,
     modifierSelector: string,
@@ -100,7 +100,12 @@ export const parseInterface = (
     const name = normalizeTypeName(textContent?.replace(/type\s+/i, "") || "");
 
     const typeFields = [...document.querySelectorAll(".indented > .method")];
-    const fields = parseFields(f, typeFields, modifierSelector, unionRegex);
+    const fields = parseFields(
+        factory,
+        typeFields,
+        modifierSelector,
+        unionRegex
+    );
 
     const overridden = fields.map((field) => {
         const { name } = field;
@@ -111,14 +116,19 @@ export const parseInterface = (
 
         const override = overrides[fieldName];
         return override
-            ? createProperty(f, fieldName, f.createKeywordTypeNode(override))
+            ? createProperty(
+                  factory,
+                  fieldName,
+                  factory.createKeywordTypeNode(override)
+              )
             : field;
     });
 
     const modifiers: Modifier[] = [];
-    if (exported) modifiers.push(f.createModifier(ts.SyntaxKind.ExportKeyword));
+    if (exported)
+        modifiers.push(factory.createModifier(ts.SyntaxKind.ExportKeyword));
 
-    return f.createInterfaceDeclaration(
+    return factory.createInterfaceDeclaration(
         undefined,
         modifiers,
         name,
