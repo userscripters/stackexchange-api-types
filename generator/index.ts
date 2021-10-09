@@ -37,6 +37,7 @@ if (res.statusCode === 200) {
     const typeLinkSel = "p > a[href*='/docs/types']";
     const typeReqSel = ".method-name > .excluded";
     const typeNameSel = ".mainbar > .subheader h1";
+    const typeFieldsSel = ".indented > .method";
 
     const typeWrappers = indented.filter(
         (e) => !!e.querySelectorAll(typeWrapSel).length
@@ -104,6 +105,7 @@ if (res.statusCode === 200) {
                 factory,
                 document,
                 typeNameSel,
+                typeFieldsSel,
                 typeReqSel,
                 unionRegex,
                 interfaceOptions

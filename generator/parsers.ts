@@ -85,6 +85,7 @@ export type InterfaceOptions = {
  * @param factory compiler factory to use
  * @param document document element to parse from
  * @param nameSelector interface identifier selector
+ * @param fieldsSelector interface fields selector
  * @param modifierSelector selector for matching optionality modifier
  * @param unionRegex regular expression to split union members
  */
@@ -92,6 +93,7 @@ export const parseInterface = (
     factory: NodeFactory,
     document: Document,
     nameSelector: string,
+    fieldsSelector: string,
     modifierSelector: string,
     unionRegex: RegExp,
     { exported = false, overrides = {} }: InterfaceOptions = {}
@@ -99,7 +101,7 @@ export const parseInterface = (
     const { textContent } = document.querySelector(nameSelector) || {};
     const name = normalizeTypeName(textContent?.replace(/type\s+/i, "") || "");
 
-    const typeFields = [...document.querySelectorAll(".indented > .method")];
+    const typeFields = [...document.querySelectorAll(fieldsSelector)];
     const fields = parseFields(
         factory,
         typeFields,
