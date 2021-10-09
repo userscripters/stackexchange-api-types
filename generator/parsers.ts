@@ -56,9 +56,13 @@ export const parseFields = (
     return fields.map((field) => {
         const optional = !!field.querySelector(modifierSelector);
         const name = text(field.querySelector(nameSelector)!);
-        const [desc] = (field.querySelector(descrSelector)!.textContent || "")
-            .trim()
-            .split("\n");
+
+        const descrElement = field.querySelector(descrSelector);
+        const [desc] = (descrElement!.textContent || "").trim().split("\n");
+
+        const canBeMissing = !!descrElement?.querySelector(
+            "a[href*='/absent-fields']"
+        );
 
         const [type] = desc.split(/,/);
         const [, item] = /array of (.+)s/i.exec(desc) || [];
@@ -71,7 +75,7 @@ export const parseFields = (
 
         const node = item ? factory.createArrayTypeNode(keyword) : keyword;
 
-        return createProperty(factory, name, node, optional);
+        return createProperty(factory, name, node, optional || canBeMissing);
     });
 };
 
