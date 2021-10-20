@@ -2,6 +2,7 @@ import got from "got";
 import type { Node, __String } from "typescript";
 import { URL } from "url";
 import { InterfaceOptions, parseInterface } from "./parsers.js";
+import { printNodesToFile } from "./printer.js";
 import { getDocument, partition, sleep } from "./utils.js";
 
 const DOCS_BASE = "https://api.stackexchange.com";
@@ -70,18 +71,6 @@ if (res.statusCode === 200) {
     const { default: ts } = await import("typescript");
     const { factory } = ts;
 
-    const printer = ts.createPrinter({
-        newLine: ts.NewLineKind.LineFeed,
-    });
-
-    const typesFile = ts.createSourceFile(
-        "types",
-        "",
-        ts.ScriptTarget.Latest,
-        false,
-        ts.ScriptKind.TS
-    );
-
     const nsName = "StackExchangeAPI";
 
     const nodes: Map<__String, Node> = new Map();
@@ -126,10 +115,5 @@ if (res.statusCode === 200) {
 
     unique.push(factory.createNamespaceExportDeclaration(nsName));
 
-    const list = factory.createNodeArray(unique);
-    const content = printer.printList(ts.ListFormat.MultiLine, list, typesFile);
-
-    const { writeFile } = await import("fs/promises");
-
-    await writeFile(`${TYPES_PATH}/types.d.ts`, content);
+    await printNodesToFile(ts, unique, `${TYPES_PATH}/types.d.ts`);
 }
