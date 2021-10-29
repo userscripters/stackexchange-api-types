@@ -58,7 +58,10 @@ export const generateResponseWrapper = async (
     const nodes: ts.Node[] = [wrapper];
 
     if (namespaceName) {
-        nodes.push(factory.createNamespaceExportDeclaration(namespaceName));
+        nodes.push(
+            factory.createIdentifier("\n"),
+            factory.createNamespaceExportDeclaration(namespaceName)
+        );
     }
 
     return printNodesToFile(ts, nodes, filePath);
