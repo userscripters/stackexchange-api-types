@@ -5,6 +5,7 @@ import type {
     TypeNode,
 } from "typescript";
 import ts from "typescript";
+import { parseKeyword } from "./parsers.js";
 
 /**
  * @summary creates a PropertySignature
@@ -47,4 +48,13 @@ export const createTypeParameter = (
         constraint && f.createKeywordTypeNode(constraint),
         defaults && f.createKeywordTypeNode(defaults)
     );
+};
+
+/**
+ * @summary creates an array of keword type nodes
+ * @param f compiler factory to use
+ * @param name identifier name for array values
+ */
+export const createKeywordArray = (f: NodeFactory, name: string) => {
+    return f.createArrayTypeNode(parseKeyword(f, name));
 };
