@@ -1,4 +1,4 @@
-import * as Wrappers from "./lib/wrapper";
+import {Wrappers} from "./lib/wrapper";
 
 declare global {
     namespace StackExchangeAPI {
