@@ -1,7 +1,9 @@
 import type {
     Identifier,
     KeywordTypeSyntaxKind,
+    Modifier,
     NodeFactory,
+    Statement,
     TypeNode,
 } from "typescript";
 import ts from "typescript";
@@ -57,4 +59,34 @@ export const createTypeParameter = (
  */
 export const createKeywordArray = (f: NodeFactory, name: string) => {
     return f.createArrayTypeNode(parseKeyword(f, name));
+};
+
+export type NamespaceOptions = {
+    exported?: boolean;
+};
+
+/**
+ * @see https://github.com/microsoft/TypeScript/issues/19030#issuecomment-335247446
+ * @summary creates a namespace declaration
+ * @param f compiler factory to use
+ * @param name identifier to create the namespace with
+ * @param statements statements to go
+ * @param options configuration
+ */
+export const createNamespace = (
+    f: NodeFactory,
+    name: string | Identifier,
+    statements: Statement[],
+    { exported = false }: NamespaceOptions = {}
+): ts.ModuleDeclaration => {
+    const modifiers: Modifier[] = [];
+    if (exported) modifiers.push(f.createModifier(ts.SyntaxKind.ExportKeyword));
+
+    return f.createModuleDeclaration(
+        undefined,
+        modifiers,
+        typeof name === "string" ? f.createIdentifier(name) : name,
+        f.createModuleBlock(statements),
+        ts.NodeFlags.Namespace
+    );
 };
