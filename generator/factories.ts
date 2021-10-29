@@ -1,4 +1,9 @@
-import type { KeywordTypeSyntaxKind, NodeFactory, TypeNode } from "typescript";
+import type {
+    Identifier,
+    KeywordTypeSyntaxKind,
+    NodeFactory,
+    TypeNode,
+} from "typescript";
 import ts from "typescript";
 
 /**
@@ -34,11 +39,11 @@ export type TypeParameterOptions = {
  */
 export const createTypeParameter = (
     f: NodeFactory,
-    name: string,
+    name: string | Identifier,
     { constraint, defaults }: TypeParameterOptions
 ): ts.TypeParameterDeclaration => {
     return f.createTypeParameterDeclaration(
-        f.createIdentifier(name),
+        typeof name === "string" ? f.createIdentifier(name) : name,
         constraint && f.createKeywordTypeNode(constraint),
         defaults && f.createKeywordTypeNode(defaults)
     );
