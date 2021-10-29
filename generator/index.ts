@@ -1,5 +1,6 @@
 import got from "got";
-import type { Node, __String } from "typescript";
+import type ts from "typescript";
+import { __String } from "typescript";
 import { URL } from "url";
 import { InterfaceOptions, parseInterface } from "./parsers.js";
 import { printNodesToFile } from "./printer.js";
@@ -73,7 +74,7 @@ if (res.statusCode === 200) {
 
     const nsName = "StackExchangeAPI";
 
-    const nodes: Map<__String, Node> = new Map();
+    const nodes: Map<__String, ts.Node> = new Map();
 
     const unionRegex =
         /(?:(?:an )?array of )?(?:one of )?'?(\w+)'?(?:,? (?:or )?(?:but new options (?:can|may|might) be added\.)?|$)/i;
@@ -81,7 +82,9 @@ if (res.statusCode === 200) {
     const interfaceOptions: InterfaceOptions = {
         exported: true,
         overrides: {
-            event_id: ts.SyntaxKind.NumberKeyword,
+            event_id: factory.createKeywordTypeNode(
+                ts.SyntaxKind.NumberKeyword
+            ),
         },
     };
 
@@ -108,7 +111,7 @@ if (res.statusCode === 200) {
         await sleep(1);
     }
 
-    const unique: Node[] = [];
+    const unique: ts.Node[] = [];
     for (const [, node] of nodes) {
         unique.push(node, factory.createIdentifier("\n"));
     }
