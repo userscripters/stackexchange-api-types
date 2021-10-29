@@ -25,8 +25,12 @@ export const partition = <T extends any[]>(arr: T, parts: number) => {
 export const capitalize = (txt: string) =>
     txt[0].toUpperCase() + txt.slice(1).toLowerCase();
 
+/**
+ * @summary properly capitalizes the type name and joins words on underscore or space
+ * @param name non-normalized type name (i.e. just parsed from docs)
+ */
 export const normalizeTypeName = (name: string) =>
-    name.split("_").map(capitalize).join("");
+    name.split(/[_ ]/).map(capitalize).join("");
 
 /**
  * @summary fetches a JSDOM document from a URL
