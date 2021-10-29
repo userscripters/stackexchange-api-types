@@ -1,4 +1,4 @@
-import type { NodeFactory, TypeNode } from "typescript";
+import type { KeywordTypeSyntaxKind, NodeFactory, TypeNode } from "typescript";
 import ts from "typescript";
 
 /**
@@ -20,3 +20,26 @@ export const createProperty = (
         optional ? f.createToken(ts.SyntaxKind.QuestionToken) : undefined,
         node
     );
+
+export type TypeParameterOptions = {
+    constraint?: KeywordTypeSyntaxKind;
+    defaults?: KeywordTypeSyntaxKind;
+};
+
+/**
+ * @summary creates a type parameter for use with generics
+ * @param f compiler factory to use
+ * @param name property name
+ * @param options configuration
+ */
+export const createTypeParameter = (
+    f: NodeFactory,
+    name: string,
+    { constraint, defaults }: TypeParameterOptions
+): ts.TypeParameterDeclaration => {
+    return f.createTypeParameterDeclaration(
+        f.createIdentifier(name),
+        constraint && f.createKeywordTypeNode(constraint),
+        defaults && f.createKeywordTypeNode(defaults)
+    );
+};
