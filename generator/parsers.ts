@@ -1,4 +1,11 @@
-import type { KeywordTypeSyntaxKind, Modifier, NodeFactory } from "typescript";
+import type {
+    ArrayTypeNode,
+    KeywordTypeNode,
+    KeywordTypeSyntaxKind,
+    Modifier,
+    NodeFactory,
+    TypeParameterDeclaration,
+} from "typescript";
 import ts from "typescript";
 import { createProperty } from "./factories.js";
 import { normalizeTypeName, text } from "./utils.js";
@@ -81,7 +88,8 @@ export const parseFields = (
 
 export type InterfaceOptions = {
     exported?: boolean;
-    overrides?: Record<string, KeywordTypeSyntaxKind>;
+    overrides?: Record<string, KeywordTypeNode | ArrayTypeNode>;
+    parameters?: TypeParameterDeclaration[];
 };
 
 /**
@@ -100,7 +108,7 @@ export const parseInterface = (
     fieldsSelector: string,
     modifierSelector: string,
     unionRegex: RegExp,
-    { exported = false, overrides = {} }: InterfaceOptions = {}
+    { exported = false, overrides = {}, parameters = [] }: InterfaceOptions = {}
 ) => {
     const { textContent } = document.querySelector(nameSelector) || {};
     const name = normalizeTypeName(textContent?.replace(/type\s+/i, "") || "");
@@ -140,7 +148,7 @@ export const parseInterface = (
         undefined,
         modifiers,
         name,
-        undefined,
+        parameters,
         undefined,
         overridden
     );
