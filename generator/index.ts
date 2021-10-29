@@ -5,6 +5,7 @@ import { URL } from "url";
 import { InterfaceOptions, parseInterface } from "./parsers.js";
 import { printNodesToFile } from "./printer.js";
 import { getDocument, partition, sleep } from "./utils.js";
+import { generateResponseWrapper } from "./wrapper.js";
 
 const DOCS_BASE = "https://api.stackexchange.com";
 const TYPES_PATH = "./lib";
@@ -119,4 +120,16 @@ if (res.statusCode === 200) {
     unique.push(factory.createNamespaceExportDeclaration(nsName));
 
     await printNodesToFile(ts, unique, `${TYPES_PATH}/types.d.ts`);
+
+    await generateResponseWrapper(
+        factory,
+        DOCS_BASE,
+        "/docs/wrapper",
+        `${TYPES_PATH}/wrapper.d.ts`,
+        typeNameSel,
+        typeFieldsSel,
+        typeReqSel,
+        unionRegex,
+        nsName
+    );
 }
