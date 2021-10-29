@@ -12,4 +12,5 @@ export interface CommonWrapperObject<T extends object = object> {
     total?: number;
     type?: string;
 }
+
 export as namespace StackExchangeAPI;
