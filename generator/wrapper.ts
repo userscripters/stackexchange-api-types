@@ -1,6 +1,10 @@
 import type { NodeFactory } from "typescript";
 import ts from "typescript";
-import { createKeywordArray, createTypeParameter } from "./factories.js";
+import {
+    createKeywordArray,
+    createNamespace,
+    createTypeParameter,
+} from "./factories.js";
 import { parseInterface } from "./parsers.js";
 import { printNodesToFile } from "./printer.js";
 import { getDocument } from "./utils.js";
@@ -16,7 +20,7 @@ import { getDocument } from "./utils.js";
  * @param fieldsSelector selector for matching interface fields
  * @param modifierSelector selector for matching optional/required modifiers
  * @param unionRegex regular expression for checking if the field value is a union
- * @param namespaceName optional namespace name if exporting as namespace
+ * @param namespaceName namespace name if exporting as namespace
  */
 export const generateResponseWrapper = async (
     factory: NodeFactory,
@@ -27,7 +31,7 @@ export const generateResponseWrapper = async (
     fieldsSelector: string,
     modifierSelector: string,
     unionRegex: RegExp,
-    namespaceName?: string
+    namespaceName: string
 ): Promise<void> => {
     const document = await getDocument(base, path);
     if (!document) return;
@@ -55,14 +59,11 @@ export const generateResponseWrapper = async (
         }
     );
 
-    const nodes: ts.Node[] = [wrapper];
+    const namespace = createNamespace(factory, namespaceName, [wrapper], {
+        exported: true,
+    });
 
-    if (namespaceName) {
-        nodes.push(
-            factory.createIdentifier("\n"),
-            factory.createNamespaceExportDeclaration(namespaceName)
-        );
-    }
+    const nodes: ts.Node[] = [namespace];
 
     return printNodesToFile(ts, nodes, filePath);
 };
