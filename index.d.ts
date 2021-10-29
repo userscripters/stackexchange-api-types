@@ -1,3 +1,11 @@
-import * as StackExchangeAPI from "./lib/types";
+import * as Wrappers from "./lib/wrapper";
 
-export default StackExchangeAPI;
+declare global {
+    namespace StackExchangeAPI {
+        export import CommonWrapperObject = Wrappers.CommonWrapperObject;
+    }
+}
+
+export * from "./lib/types";
+export * from "./lib/wrapper";
+export as namespace StackExchangeAPI;
