@@ -130,6 +130,6 @@ if (res.statusCode === 200) {
         typeFieldsSel,
         typeReqSel,
         unionRegex,
-        nsName
+        "Wrappers"
     );
 }
