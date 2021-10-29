@@ -1,13 +1,13 @@
 import { expectAssignable, expectType } from "tsd";
 import { Question } from "../lib/types";
-import { CommonWrapperObject } from "../lib/wrapper";
+import { Wrappers } from "../lib/wrapper";
 
 declare function getQuestionFromAPI(
     id: number
-): Promise<CommonWrapperObject<Question>>;
+): Promise<Wrappers.CommonWrapperObject<Question>>;
 
 const response = await getQuestionFromAPI(42);
-expectAssignable<CommonWrapperObject>(response);
+expectAssignable<Wrappers.CommonWrapperObject>(response);
 
 const { backoff, items, has_more, quota_max, quota_remaining } = response;
 expectType<Question[]>(items);
