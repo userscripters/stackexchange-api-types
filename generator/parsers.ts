@@ -72,7 +72,7 @@ export const parseFields = (
         );
 
         const [type] = desc.split(/,/);
-        const [, item] = /array of (.+)s?/i.exec(desc) || [];
+        const [, item] = /array of (.+)s/i.exec(desc) || [];
 
         const key = item || type;
 
