@@ -127,3 +127,37 @@ export const createEnum = (
         members
     );
 };
+
+export type StringUnionOptions = {
+    exported?: boolean;
+};
+
+/**
+ * @summary creates a string union node
+ * @param f compiler factory to use
+ * @param name identifier of the enum
+ * @param members list of union members
+ */
+export const createStringUnion = (
+    f: NodeFactory,
+    name: string | Identifier,
+    members: string[],
+    { exported = false }: StringUnionOptions = {}
+) => {
+    const modifiers: Modifier[] = [];
+    if (exported) modifiers.push(f.createModifier(ts.SyntaxKind.ExportKeyword));
+
+    const union = f.createUnionTypeNode(
+        members.map((type) =>
+            f.createLiteralTypeNode(f.createStringLiteral(type))
+        )
+    );
+
+    return f.createTypeAliasDeclaration(
+        undefined,
+        modifiers,
+        typeof name === "string" ? f.createIdentifier(name) : name,
+        undefined,
+        union
+    );
+};
