@@ -33,6 +33,17 @@ export const normalizeTypeName = (name: string) =>
     name.split(/[_ ]/).map(capitalize).join("");
 
 /**
+ * @summary capitalizes the filter name, as well as trims, and removes leading and trailing dots
+ * @param name non-normalized type name (i.e. just parsed from docs)
+ */
+export const normalizeFilterName = (name: string) => {
+    return name
+        .trim()
+        .replace(/^[.]|[.]$/g, "")
+        .toUpperCase();
+};
+
+/**
  * @summary fetches a JSDOM document from a URL
  */
 export const getDocument = async (base: string, path: string) => {
