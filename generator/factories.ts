@@ -1,4 +1,6 @@
 import type {
+    EnumMember,
+    Expression,
     Identifier,
     KeywordTypeSyntaxKind,
     Modifier,
@@ -88,5 +90,38 @@ export const createNamespace = (
         typeof name === "string" ? f.createIdentifier(name) : name,
         f.createModuleBlock(statements),
         ts.NodeFlags.Namespace
+    );
+};
+
+export type EnumOptions = {
+    exported?: boolean;
+};
+
+/**
+ * @summary creates a enum declaration
+ * @param f compiler factory to use
+ * @param name identifier of the enum
+ * @param expressions members of the enum
+ * @param options configuration
+ */
+export const createEnum = (
+    f: NodeFactory,
+    name: string | Identifier,
+    expressions: Map<string | Identifier, Expression>,
+    { exported = false }: EnumOptions = {}
+) => {
+    const modifiers: Modifier[] = [];
+    if (exported) modifiers.push(f.createModifier(ts.SyntaxKind.ExportKeyword));
+
+    const members: EnumMember[] = [];
+    expressions.forEach((expression, name) => {
+        members.push(f.createEnumMember(name, expression));
+    });
+
+    return f.createEnumDeclaration(
+        undefined,
+        modifiers,
+        typeof name === "string" ? f.createIdentifier(name) : name,
+        members
     );
 };
