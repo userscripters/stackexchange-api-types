@@ -6,6 +6,7 @@ declare global {
     }
 }
 
+export * from "./lib/filters";
 export * from "./lib/types";
 export * from "./lib/wrapper";
 export as namespace StackExchangeAPI;
