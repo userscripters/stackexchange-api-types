@@ -95,6 +95,7 @@ export const createNamespace = (
 
 export type EnumOptions = {
     exported?: boolean;
+    constant?: boolean;
 };
 
 /**
@@ -108,10 +109,11 @@ export const createEnum = (
     f: NodeFactory,
     name: string | Identifier,
     expressions: Map<string | Identifier, Expression>,
-    { exported = false }: EnumOptions = {}
+    { exported = false, constant = false }: EnumOptions = {}
 ) => {
     const modifiers: Modifier[] = [];
     if (exported) modifiers.push(f.createModifier(ts.SyntaxKind.ExportKeyword));
+    if (constant) modifiers.push(f.createModifier(ts.SyntaxKind.ConstKeyword));
 
     const members: EnumMember[] = [];
     expressions.forEach((expression, name) => {
