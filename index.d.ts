@@ -1,8 +1,10 @@
-import {Wrappers} from "./lib/wrapper";
+import F from "./lib/filters";
+import { Wrappers } from "./lib/wrapper";
 
 declare global {
     namespace StackExchangeAPI {
         export import CommonWrapperObject = Wrappers.CommonWrapperObject;
+        export import Filters = F.Filters;
     }
 }
 
