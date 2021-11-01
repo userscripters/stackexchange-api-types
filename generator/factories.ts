@@ -63,6 +63,43 @@ export const createKeywordArray = (f: NodeFactory, name: string) => {
     return f.createArrayTypeNode(parseKeyword(f, name));
 };
 
+export type ModuleDeclarationOptions = {
+    exported?: boolean;
+    isAmbient?: boolean;
+    isNamespace?: boolean;
+};
+
+/**
+ * @summary creates a module declaration
+ * @param f compiler factory to use
+ * @param name identifier to create the module with
+ * @param statements statements to make up the body
+ * @param options configuration
+ */
+export const createModuleDeclaration = (
+    f: NodeFactory,
+    name: string | Identifier,
+    statements: Statement[],
+    {
+        exported = false,
+        isNamespace = false,
+        isAmbient = false,
+    }: ModuleDeclarationOptions = {}
+) => {
+    const modifiers: Modifier[] = [];
+    if (exported) modifiers.push(f.createModifier(ts.SyntaxKind.ExportKeyword));
+    if (isAmbient)
+        modifiers.push(f.createModifier(ts.SyntaxKind.DeclareKeyword));
+
+    return f.createModuleDeclaration(
+        undefined,
+        modifiers,
+        typeof name === "string" ? f.createIdentifier(name) : name,
+        f.createModuleBlock(statements),
+        isNamespace ? ts.NodeFlags.Namespace : void 0
+    );
+};
+
 export type NamespaceOptions = {
     exported?: boolean;
 };
@@ -72,7 +109,7 @@ export type NamespaceOptions = {
  * @summary creates a namespace declaration
  * @param f compiler factory to use
  * @param name identifier to create the namespace with
- * @param statements statements to go
+ * @param statements statements to make up the body
  * @param options configuration
  */
 export const createNamespace = (
@@ -84,13 +121,10 @@ export const createNamespace = (
     const modifiers: Modifier[] = [];
     if (exported) modifiers.push(f.createModifier(ts.SyntaxKind.ExportKeyword));
 
-    return f.createModuleDeclaration(
-        undefined,
-        modifiers,
-        typeof name === "string" ? f.createIdentifier(name) : name,
-        f.createModuleBlock(statements),
-        ts.NodeFlags.Namespace
-    );
+    return createModuleDeclaration(f, name, statements, {
+        exported,
+        isNamespace: true,
+    });
 };
 
 export type EnumOptions = {
