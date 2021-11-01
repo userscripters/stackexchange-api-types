@@ -138,6 +138,7 @@ if (res.statusCode === 200) {
         factory,
         DOCS_BASE,
         "/docs/filters",
-        `${TYPES_PATH}/filters.d.ts`
+        `${TYPES_PATH}/filters.d.ts`,
+        "Filters"
     );
 }
