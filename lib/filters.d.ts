@@ -1,6 +1,3 @@
-export enum BuiltInFilters {
-    DEFAULT = "default",
-    WITHBODY = "withbody",
-    NONE = "none",
-    TOTAL = "total"
+export namespace Filters {
+    export type BuiltIn = "default" | "withbody" | "default" | "none" | "total";
 }

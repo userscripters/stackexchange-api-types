@@ -1,6 +1,6 @@
-import type { NodeFactory, StringLiteral } from "typescript";
+import type { NodeFactory } from "typescript";
 import ts from "typescript";
-import { createEnum } from "./factories.js";
+import { createNamespace, createStringUnion } from "./factories.js";
 import { printNodesToFile } from "./printer.js";
 import { getDocument, normalizeFilterName } from "./utils.js";
 
@@ -11,12 +11,14 @@ import { getDocument, normalizeFilterName } from "./utils.js";
  * @param base API base URL to use
  * @param path API endpoint path
  * @param filePath output file path
+ * @param namespaceName namespace name
  */
 export const generateBuiltInFilters = async (
     factory: NodeFactory,
     base: string,
     path: string,
-    filePath: string
+    filePath: string,
+    namespaceName: string
 ) => {
     const document = await getDocument(base, path);
     if (!document) return;
@@ -30,23 +32,19 @@ export const generateBuiltInFilters = async (
         ) || {};
     if (!listElem) return;
 
-    const filterElems = listElem.querySelectorAll("ul li code");
+    const filterElems = [...listElem.querySelectorAll("ul li code")];
 
-    const filters: Map<string, StringLiteral> = new Map();
-    filterElems.forEach(({ textContent }) => {
-        if (!textContent || /^\*?\./.test(textContent)) return;
+    const filters = filterElems
+        .filter(({ textContent }) => textContent && !/^\*?\./.test(textContent))
+        .map(({ textContent }) => normalizeFilterName(textContent!));
 
-        const memberName = normalizeFilterName(textContent);
-        const memberValue = factory.createStringLiteral(
-            memberName.toLowerCase()
-        );
-
-        filters.set(memberName, memberValue);
-    });
-
-    const filtersEnum = createEnum(factory, "BuiltInFilters", filters, {
+    const filtersEnum = createStringUnion(factory, "BuiltIn", filters, {
         exported: true,
     });
 
-    return printNodesToFile(ts, [filtersEnum], filePath);
+    const namespace = createNamespace(factory, namespaceName, [filtersEnum], {
+        exported: true,
+    });
+
+    return printNodesToFile(ts, [namespace], filePath);
 };
