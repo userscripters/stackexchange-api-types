@@ -40,7 +40,7 @@ export const normalizeFilterName = (name: string) => {
     return name
         .trim()
         .replace(/^[.]|[.]$/g, "")
-        .toUpperCase();
+        .toLowerCase();
 };
 
 /**
