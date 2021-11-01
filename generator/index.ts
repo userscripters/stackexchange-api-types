@@ -2,6 +2,7 @@ import got from "got";
 import type ts from "typescript";
 import { __String } from "typescript";
 import { URL } from "url";
+import { generateBuiltInFilters } from "./filters.js";
 import { InterfaceOptions, parseInterface } from "./parsers.js";
 import { printNodesToFile } from "./printer.js";
 import { getDocument, partition, sleep } from "./utils.js";
@@ -131,5 +132,12 @@ if (res.statusCode === 200) {
         typeReqSel,
         unionRegex,
         "Wrappers"
+    );
+
+    await generateBuiltInFilters(
+        factory,
+        DOCS_BASE,
+        "/docs/filters",
+        `${TYPES_PATH}/filters.d.ts`
     );
 }
