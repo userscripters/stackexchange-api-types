@@ -111,6 +111,6 @@ export const generateTypes = async (
     await printNodesToFile(
         ts,
         [...pretty, factory.createIdentifier("\n"), global],
-        `${filePath}/types.d.ts`
+        filePath
     );
 };
