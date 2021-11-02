@@ -1,4 +1,5 @@
 import got from "got";
+import { generateErrors } from "./errors.js";
 import { generateBuiltInFilters } from "./filters.js";
 import { generateTypes } from "./types.js";
 import { generateResponseWrapper } from "./wrapper.js";
@@ -45,6 +46,14 @@ await generateBuiltInFilters(
     "/docs/filters",
     `${TYPES_PATH}/filters.d.ts`,
     "Filters"
+);
+
+await generateErrors(
+    factory,
+    DOCS_BASE,
+    "/docs/error-handling",
+    `${TYPES_PATH}/errors.d.ts`,
+    nsName
 );
 
 await generateTypes(factory, DOCS_BASE, `${TYPES_PATH}/types.d.ts`, nsName);
