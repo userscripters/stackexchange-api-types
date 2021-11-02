@@ -43,11 +43,23 @@ export const normalizeFilterName = (name: string) => {
         .toLowerCase();
 };
 
+export type GetDocumentOptions = {
+    hash?: string;
+    parameters?: Record<string, string>;
+};
+
 /**
  * @summary fetches a JSDOM document from a URL
  */
-export const getDocument = async (base: string, path: string) => {
+export const getDocument = async (
+    base: string,
+    path: string,
+    { hash, parameters = {} }: GetDocumentOptions = {}
+) => {
     const url = new URL(`${base}${path}`);
+    url.search = new URLSearchParams(parameters).toString();
+    if (hash) url.hash = hash;
+
     const res = await got(url);
     if (res.statusCode !== 200) return;
 
