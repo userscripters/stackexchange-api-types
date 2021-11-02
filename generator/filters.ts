@@ -18,6 +18,7 @@ const addGlobalModifyingVersion = (
     const commonNS = createNamespace(factory, "StackExchangeAPI", [ns]);
     return createModuleDeclaration(factory, "global", [commonNS], {
         isAmbient: true,
+        isGlobal: true,
     });
 };
 
