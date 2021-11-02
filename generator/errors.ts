@@ -28,13 +28,15 @@ const addGlobalModifyingVersion = (
  * @param path API endpoint path
  * @param filePath output file path
  * @param namespaceName namespace name
+ * @param globalNsName namespace name added to the UMD module
  */
 export const generateErrors = async (
     factory: NodeFactory,
     base: string,
     path: string,
     filePath: string,
-    namespaceName: string
+    namespaceName: string,
+    globalNsName: string
 ) => {
     const document = await getDocument(base, path);
     if (!document) return;
@@ -58,9 +60,11 @@ export const generateErrors = async (
         createUnionOfPrimitives(factory, "Code", errorCodes, opts),
     ];
 
-    const ns = createNamespace(factory, "Errors", nodes, { exported: true });
+    const ns = createNamespace(factory, namespaceName, nodes, {
+        exported: true,
+    });
 
-    const global = addGlobalModifyingVersion(factory, namespaceName, [ns]);
+    const global = addGlobalModifyingVersion(factory, globalNsName, [ns]);
 
     return printNodesToFile(
         ts,

@@ -53,6 +53,7 @@ await generateErrors(
     DOCS_BASE,
     "/docs/error-handling",
     `${TYPES_PATH}/errors.d.ts`,
+    "Errors",
     nsName
 );
 
