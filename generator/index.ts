@@ -45,7 +45,8 @@ await generateBuiltInFilters(
     DOCS_BASE,
     "/docs/filters",
     `${TYPES_PATH}/filters.d.ts`,
-    "Filters"
+    "Filters",
+    nsName
 );
 
 await generateErrors(

@@ -8,14 +8,22 @@ import {
 import { printNodesToFile } from "./printer.js";
 import { getDocument, normalizeFilterName } from "./utils.js";
 
+/**
+ * @summary adds a global-modifying version of the module
+ * @param factory compiler factory to use
+ * @param namespaceName namespace name
+ * @param globalNsName namespace name added to the UMD module
+ * @param filters array of filter names
+ */
 const addGlobalModifyingVersion = (
     factory: NodeFactory,
     namespaceName: string,
+    globalNsName: string,
     filters: string[]
 ) => {
     const union = createUnionOfPrimitives(factory, "BuiltIn", filters);
     const ns = createNamespace(factory, namespaceName, [union]);
-    const commonNS = createNamespace(factory, "StackExchangeAPI", [ns]);
+    const commonNS = createNamespace(factory, globalNsName, [ns]);
     return createModuleDeclaration(factory, "global", [commonNS], {
         isAmbient: true,
         isGlobal: true,
@@ -30,13 +38,15 @@ const addGlobalModifyingVersion = (
  * @param path API endpoint path
  * @param filePath output file path
  * @param namespaceName namespace name
+ * @param globalNsName namespace name added to the UMD module
  */
 export const generateBuiltInFilters = async (
     factory: NodeFactory,
     base: string,
     path: string,
     filePath: string,
-    namespaceName: string
+    namespaceName: string,
+    globalNsName: string
 ) => {
     const document = await getDocument(base, path);
     if (!document) return;
@@ -64,7 +74,12 @@ export const generateBuiltInFilters = async (
         exported: true,
     });
 
-    const global = addGlobalModifyingVersion(factory, namespaceName, filters);
+    const global = addGlobalModifyingVersion(
+        factory,
+        namespaceName,
+        globalNsName,
+        filters
+    );
 
     return printNodesToFile(
         ts,
