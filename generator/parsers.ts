@@ -135,7 +135,14 @@ export const parseInterface = (
             : "";
 
         const override = overrides[fieldName];
-        return override ? createProperty(factory, fieldName, override) : field;
+        return override
+            ? createProperty(
+                  factory,
+                  fieldName,
+                  override,
+                  !!field.questionToken
+              )
+            : field;
     });
 
     const modifiers: Modifier[] = [];
