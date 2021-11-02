@@ -2,12 +2,13 @@ import type { NodeFactory } from "typescript";
 import ts from "typescript";
 import {
     createKeywordArray,
+    createNamedImport,
     createNamespace,
     createTypeParameter,
 } from "./factories.js";
 import { parseInterface } from "./parsers.js";
 import { printNodesToFile } from "./printer.js";
-import { getDocument } from "./utils.js";
+import { getDocument, interleave } from "./utils.js";
 
 /**
  * @see https://api.stackexchange.com/docs/wrapper
@@ -53,17 +54,24 @@ export const generateResponseWrapper = async (
         {
             overrides: {
                 items: createKeywordArray(factory, typeParameterName),
+                error_name: factory.createTypeReferenceNode("Errors.Name"),
+                error_id: factory.createTypeReferenceNode("Errors.Code"),
             },
             parameters: [typeParameter],
             exported: true,
         }
     );
 
+    const errImports = createNamedImport(factory, "./errors", ["Errors"]);
+
     const namespace = createNamespace(factory, namespaceName, [wrapper], {
         exported: true,
     });
 
-    const nodes: ts.Node[] = [namespace];
+    const nodes: ts.Node[] = interleave(
+        [errImports, namespace],
+        factory.createIdentifier("\n")
+    );
 
     return printNodesToFile(ts, nodes, filePath);
 };
