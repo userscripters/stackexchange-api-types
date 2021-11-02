@@ -207,3 +207,29 @@ export const createUnionOfPrimitives = (
         union
     );
 };
+
+/**
+ * @summary creates a named import with a list of import specifiers
+ * @param f compiler factory to use
+ * @param specifier module specifier (reference)
+ * @param names list of import specifier names
+ */
+export const createNamedImport = (
+    f: NodeFactory,
+    specifier: string,
+    names: string[]
+) => {
+    const specifiers = names.map((name) => {
+        return f.createImportSpecifier(
+            void -0,
+            typeof name === "string" ? f.createIdentifier(name) : name
+        );
+    });
+
+    return f.createImportDeclaration(
+        undefined,
+        undefined,
+        f.createImportClause(true, undefined, f.createNamedImports(specifiers)),
+        f.createStringLiteral(specifier)
+    );
+};
