@@ -28,40 +28,55 @@ const nsName = "StackExchangeAPI";
 const unionRegex =
     /(?:(?:an )?array of )?(?:one of )?'?(\w+)'?(?:,? (?:or )?(?:but new options (?:can|may|might) be added\.)?|$)/i;
 
-await generateResponseWrapper(
-    factory,
-    DOCS_BASE,
-    "/docs/wrapper",
-    `${TYPES_PATH}/wrapper.d.ts`,
-    typeNameSel,
-    typeFieldsSel,
-    typeReqSel,
-    unionRegex,
-    "Wrappers"
-);
+const generate = {
+    wrapper: true,
+    filters: true,
+    errors: true,
+    types: true,
+};
 
-await generateBuiltInFilters(
-    factory,
-    DOCS_BASE,
-    "/docs/filters",
-    `${TYPES_PATH}/filters.d.ts`,
-    "Filters",
-    nsName
-);
+if (generate.wrapper) {
+    await generateResponseWrapper(
+        factory,
+        DOCS_BASE,
+        "/docs/wrapper",
+        `${TYPES_PATH}/wrapper.d.ts`,
+        typeNameSel,
+        typeFieldsSel,
+        typeReqSel,
+        unionRegex,
+        "Wrappers"
+    );
+}
 
-await generateErrors(
-    factory,
-    DOCS_BASE,
-    "/docs/error-handling",
-    `${TYPES_PATH}/errors.d.ts`,
-    "Errors",
-    nsName
-);
+if (generate.filters) {
+    await generateBuiltInFilters(
+        factory,
+        DOCS_BASE,
+        "/docs/filters",
+        `${TYPES_PATH}/filters.d.ts`,
+        "Filters",
+        nsName
+    );
+}
 
-await generateTypes(
-    factory,
-    DOCS_BASE,
-    "/docs",
-    `${TYPES_PATH}/types.d.ts`,
-    nsName
-);
+if (generate.errors) {
+    await generateErrors(
+        factory,
+        DOCS_BASE,
+        "/docs/error-handling",
+        `${TYPES_PATH}/errors.d.ts`,
+        "Errors",
+        nsName
+    );
+}
+
+if (generate.types) {
+    await generateTypes(
+        factory,
+        DOCS_BASE,
+        "/docs",
+        `${TYPES_PATH}/types.d.ts`,
+        nsName
+    );
+}
