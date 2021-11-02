@@ -1,4 +1,5 @@
 import "./lib/filters";
+import "./lib/types";
 import { Wrappers } from "./lib/wrapper";
 
 declare global {
@@ -7,6 +8,5 @@ declare global {
     }
 }
 
-export * from "./lib/types";
 export * from "./lib/wrapper";
 export as namespace StackExchangeAPI;
