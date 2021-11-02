@@ -168,28 +168,34 @@ export const createEnum = (
     );
 };
 
-export type StringUnionOptions = {
+export type PrimitiveUnionOptions = {
     exported?: boolean;
 };
 
 /**
- * @summary creates a string union node
+ * @summary creates a union node with primitive members
  * @param f compiler factory to use
  * @param name identifier of the enum
  * @param members list of union members
  */
-export const createStringUnion = (
+export const createUnionOfPrimitives = (
     f: NodeFactory,
     name: string | Identifier,
-    members: string[],
-    { exported = false }: StringUnionOptions = {}
+    members: (string | number | boolean | bigint)[],
+    { exported = false }: PrimitiveUnionOptions = {}
 ) => {
     const modifiers: Modifier[] = [];
     if (exported) modifiers.push(f.createModifier(ts.SyntaxKind.ExportKeyword));
 
+    const hs = new Map();
+    hs.set("string", (v: string) => f.createStringLiteral(v));
+    hs.set("number", (v: number) => f.createNumericLiteral(v));
+    hs.set("boolean", (v: boolean) => (v ? f.createTrue() : f.createFalse()));
+    hs.set("bigint", (v: ts.PseudoBigInt) => f.createBigIntLiteral(v));
+
     const union = f.createUnionTypeNode(
         members.map((type) =>
-            f.createLiteralTypeNode(f.createStringLiteral(type))
+            f.createLiteralTypeNode(hs.get(typeof type)(type))
         )
     );
 
