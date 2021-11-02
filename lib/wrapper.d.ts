@@ -1,9 +1,11 @@
+import type { Errors } from "./errors";
+
 export namespace Wrappers {
     export interface CommonWrapperObject<T extends object = object> {
         backoff?: number;
-        error_id?: number;
+        error_id?: Errors.Code;
         error_message?: string;
-        error_name?: string;
+        error_name?: Errors.Name;
         has_more: boolean;
         items: T[];
         page?: number;
