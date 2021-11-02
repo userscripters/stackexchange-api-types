@@ -56,4 +56,10 @@ await generateErrors(
     nsName
 );
 
-await generateTypes(factory, DOCS_BASE, `${TYPES_PATH}/types.d.ts`, nsName);
+await generateTypes(
+    factory,
+    DOCS_BASE,
+    "/docs",
+    `${TYPES_PATH}/types.d.ts`,
+    nsName
+);

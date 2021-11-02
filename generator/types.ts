@@ -17,13 +17,17 @@ const addGlobalModifyingVersion = (
     });
 };
 
+/**
+ * @summary generates API types
+ */
 export const generateTypes = async (
     factory: NodeFactory,
     base: string,
+    path: string,
     filePath: string,
     namespaceName: string
 ) => {
-    const document = await getDocument(base, "/docs", {
+    const document = await getDocument(base, path, {
         hash: "docs",
         parameters: { tab: "type" },
     });
