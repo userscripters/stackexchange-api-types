@@ -5,6 +5,7 @@ import type {
     Modifier,
     NodeFactory,
     TypeParameterDeclaration,
+    TypeReferenceNode,
 } from "typescript";
 import ts from "typescript";
 import { createProperty } from "./factories.js";
@@ -88,7 +89,10 @@ export const parseFields = (
 
 export type InterfaceOptions = {
     exported?: boolean;
-    overrides?: Record<string, KeywordTypeNode | ArrayTypeNode>;
+    overrides?: Record<
+        string,
+        KeywordTypeNode | ArrayTypeNode | TypeReferenceNode
+    >;
     parameters?: TypeParameterDeclaration[];
 };
 
