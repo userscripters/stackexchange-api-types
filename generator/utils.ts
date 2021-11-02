@@ -71,3 +71,15 @@ export const getDocument = async (
 
     return document;
 };
+
+/**
+ * @summary interleaves an array with a given element at even positions
+ */
+export const interleave = <T, U>(arr: T[], inserted: U) => {
+    let insertions = 0;
+    return arr.flatMap((val, idx) => {
+        const isEven = (idx + insertions) % 2;
+        if (isEven) insertions += 1;
+        return isEven ? [inserted, val] : val;
+    });
+};
