@@ -3,7 +3,7 @@ import ts from "typescript";
 import {
     createModuleDeclaration,
     createNamespace,
-    createStringUnion,
+    createUnionOfPrimitives,
 } from "./factories.js";
 import { printNodesToFile } from "./printer.js";
 import { getDocument, normalizeFilterName } from "./utils.js";
@@ -13,7 +13,7 @@ const addGlobalModifyingVersion = (
     namespaceName: string,
     filters: string[]
 ) => {
-    const union = createStringUnion(factory, "BuiltIn", filters);
+    const union = createUnionOfPrimitives(factory, "BuiltIn", filters);
     const ns = createNamespace(factory, namespaceName, [union]);
     const commonNS = createNamespace(factory, "StackExchangeAPI", [ns]);
     return createModuleDeclaration(factory, "global", [commonNS], {
@@ -56,7 +56,7 @@ export const generateBuiltInFilters = async (
         .filter(({ textContent }) => textContent && !/^\*?\./.test(textContent))
         .map(({ textContent }) => normalizeFilterName(textContent!));
 
-    const union = createStringUnion(factory, "BuiltIn", filters, {
+    const union = createUnionOfPrimitives(factory, "BuiltIn", filters, {
         exported: true,
     });
 
