@@ -67,6 +67,7 @@ export type ModuleDeclarationOptions = {
     exported?: boolean;
     isAmbient?: boolean;
     isNamespace?: boolean;
+    isGlobal?: boolean;
 };
 
 /**
@@ -82,6 +83,7 @@ export const createModuleDeclaration = (
     statements: Statement[],
     {
         exported = false,
+        isGlobal = false,
         isNamespace = false,
         isAmbient = false,
     }: ModuleDeclarationOptions = {}
@@ -91,12 +93,16 @@ export const createModuleDeclaration = (
     if (isAmbient)
         modifiers.push(f.createModifier(ts.SyntaxKind.DeclareKeyword));
 
+    const flagMap: Map<boolean, ts.NodeFlags> = new Map();
+    flagMap.set(isNamespace, ts.NodeFlags.Namespace);
+    flagMap.set(isGlobal, ts.NodeFlags.GlobalAugmentation);
+
     return f.createModuleDeclaration(
         undefined,
         modifiers,
         typeof name === "string" ? f.createIdentifier(name) : name,
         f.createModuleBlock(statements),
-        isNamespace ? ts.NodeFlags.Namespace : void 0
+        flagMap.get(true)
     );
 };
 
