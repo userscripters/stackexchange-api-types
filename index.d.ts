@@ -1,3 +1,4 @@
+import "./lib/errors";
 import "./lib/filters";
 import "./lib/types";
 import { Wrappers } from "./lib/wrapper";
