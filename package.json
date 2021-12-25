@@ -32,7 +32,7 @@
         "postversion": "bash ./scripts/version.sh"
     },
     "devDependencies": {
-        "@types/jsdom": "^16.2.13",
+        "@types/jsdom": "^16.2.14",
         "@userscripters/generate-readme": "^2.1.1",
         "got": "^11.8.3",
         "jsdom": "^19.0.0",
