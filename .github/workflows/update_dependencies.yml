@@ -7,4 +7,4 @@ on:
 
 jobs:
     build:
-        uses: userscripters/shared-actions/.github/workflows/workflow-nodejs.yml@master
+        uses: userscripters/shared-actions/.github/workflows/workflow-update_dependencies.yml@master
