@@ -35,7 +35,7 @@
         "@types/jsdom": "^21.1.1",
         "@userscripters/generate-readme": "^2.3.1",
         "got": "^12.6.0",
-        "jsdom": "^21.1.2",
+        "jsdom": "^22.0.0",
         "ts-node": "^10.9.1",
         "tsd": "^0.28.1",
         "typescript": "^5.0.4"
