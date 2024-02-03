@@ -8,6 +8,7 @@
 | License | [GPL-3.0-or-later](https://spdx.org/licenses/GPL-3.0-or-later) |
 | Version | 3.4.0 |
 
+
 # Support
 
 Bug reports for the project should be [submitted here](https://github.com/userscripters/stackexchange-api-types/issues).
