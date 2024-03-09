@@ -38,7 +38,7 @@
         "jsdom": "^22.1.0",
         "ts-node": "^10.9.2",
         "tsd": "^0.30.7",
-        "typescript": "^5.3.3"
+        "typescript": "^5.4.2"
     },
     "type": "module",
     "types": "./index.d.ts"
