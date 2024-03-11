@@ -34,7 +34,7 @@
     "devDependencies": {
         "@types/jsdom": "^21.1.6",
         "@userscripters/generate-readme": "^3.0.2",
-        "got": "^13.0.0",
+        "got": "^14.2.1",
         "jsdom": "^22.1.0",
         "ts-node": "^10.9.2",
         "tsd": "^0.30.7",
